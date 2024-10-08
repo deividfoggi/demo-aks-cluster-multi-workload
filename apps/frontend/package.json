@@ -1,0 +1,15 @@
+{
+    "name": "docker_frontend",
+    "version": "1.0.0",
+    "description": "Frontend for docker",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "author": "dfoggi",
+    "dependencies": {
+        "express": "^4.16.4",
+        "request": "^2.88.0",
+        "xmlhttprequest": "^1.8.0"
+    }
+}

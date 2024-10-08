@@ -1,0 +1,47 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!-- call createOrder function when the page is loaded -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.get("http://localhost/createorder", function(data){
+            $("#order_id").text(data.order_id);
+            $("#order_name").text(data.order_name);
+            $("#order_timestamp").text(data.order_timestamp);
+        });
+    });
+
+    // get hostname from the server and print it in a div
+    $.get("http://localhost/hostname", function(data){
+        $("#hostname").text(`Hostname: `+data);
+    });
+</script>
+<!-- create a table with a line and a column with the div order_result inside -->
+<html>
+    <head>
+        <title>dfoggi-myshop</title>
+    </head>
+    <body>
+        <div>Green</div>
+        <div id="hostname"></div>
+        <h1>Order:</h1>
+        <table>
+            <tr>
+                <td>Order ID:</td>
+                <td>
+                    <div id="order_id"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>Order Name:</td>
+                <td>
+                    <div id="order_name"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>Order Time:</td>
+                <td>
+                    <div id="order_timestamp"></div>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

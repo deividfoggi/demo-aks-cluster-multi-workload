@@ -1,0 +1,51 @@
+trigger:
+  branches:
+    include:
+      - development/*
+  paths:
+    include:
+    - infra/azure/deployment/*
+    - pipelines/ci*
+
+
+jobs:
+  - job: terraform_plan
+    displayName: Terraform plan
+    pool:
+      name: Hosted
+    steps:
+    - task: TerraformInstaller@1
+      displayName: 'Terraform install'
+      inputs:
+        terraformVersion: 'latest'
+
+    - task: TerraformTaskV4@4
+      displayName: 'Terraform Init'
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/infra/azure/iac'
+        backendServiceArm: 'apim-deployment'
+        backendAzureRmResourceGroupName: 'DefaultResourceGroup-EUS'
+        backendAzureRmStorageAccountName: 'terraformdfoggistg'
+        backendAzureRmContainerName: 'terraformbackend'
+        backendAzureRmKey: 'terraformbackend/terraform.tfstate'
+
+    - task: TerraformTaskV4@4
+      displayName: 'Terraform Plan'
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/infra/azure/iac'
+        commandOptions: '--var-file=$(System.DefaultWorkingDirectory)/infra/azure/iac/terraform-homolog.tfvars'
+        environmentServiceNameAzureRM: 'apim-deployment'
+
+    - script: |
+        rm -f $(System.DefaultWorkingDirectory)/infra/azure/iac/.terraform.lock.hcl
+      displayName: 'Remove Terraform Lock File'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/infra/azure'
+        ArtifactName: 'tf-plan'
+        publishLocation: 'Container'
