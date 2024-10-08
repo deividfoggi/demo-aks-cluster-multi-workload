@@ -1,2 +1,4 @@
 azure/iac/.terraform/
 azure/iac/terraform.lock.hcl
+*.tfstate
+.DS_Store
