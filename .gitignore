@@ -1,2 +1,2 @@
-azure/iac/.terraform/** */
+azure/iac/.terraform/**
 azure/iac/terraform.lock.hcl
