@@ -7,3 +7,7 @@ This landing zone accelerator is intended to provide you a quick way to deploy a
 This cluster takes advantage of the managed nginx ingress controller to manage routing to multiple and independent applications.
 
 The following diagram explains each component and its responsability to allow inbound connections to the pods inside the cluster.
+
+### How to use it
+
+Make sure you update the [variable values](https://github.com/deividfoggi/demo-aks-cluster-multi-workload/blob/main/azure/iac/terraform-homolog.tfvars) file accordingly.
